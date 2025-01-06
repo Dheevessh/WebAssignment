@@ -11,6 +11,12 @@ form {
     border: 1px solid #ddd;
     background-color: #fff;
     box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    text-align: center;
+}
+form h2 {
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: #333;
 }
 form input, form button {
     width: 100%;
@@ -27,3 +33,4 @@ form button {
 form button:hover {
     background-color: #0056b3;
 }
+

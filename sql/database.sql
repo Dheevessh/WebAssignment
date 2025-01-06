@@ -41,4 +41,3 @@ CREATE TABLE bookings (
     FOREIGN KEY (user_id) REFERENCES users(id),
     FOREIGN KEY (seat_id) REFERENCES seats(id)
 );
-*/
