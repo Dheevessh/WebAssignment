@@ -14,7 +14,8 @@ CREATE TABLE movies (
     title VARCHAR(100) NOT NULL,
     description TEXT,
     duration TIME,
-    release_date DATE
+    release_date DATE,
+    image_url VARCHAR(255)
 );
 
 CREATE TABLE showtimes (
@@ -36,8 +37,10 @@ CREATE TABLE seats (
 CREATE TABLE bookings (
     id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT NOT NULL,
-    seat_id INT NOT NULL,
+    showtime_id INT NOT NULL,
+    seats INT NOT NULL,
+    total_price DECIMAL(10, 2) NOT NULL,
     payment_status ENUM('pending', 'paid') DEFAULT 'pending',
     FOREIGN KEY (user_id) REFERENCES users(id),
-    FOREIGN KEY (seat_id) REFERENCES seats(id)
+    FOREIGN KEY (showtime_id) REFERENCES showtimes(id)
 );
