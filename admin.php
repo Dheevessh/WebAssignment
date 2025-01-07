@@ -1,9 +1,23 @@
 <?php
+session_start();
+
+// Ensure only logged-in admin can access
+if (!isset($_SESSION['user']) || $_SESSION['user'] !== 'admin') {
+    header("Location: login.php");
+    exit;
+}
+
 include 'db.php';
 
-$sql = "SELECT * FROM bookings";
+// Query to fetch all booking data with movie and user details
+$sql = "
+    SELECT b.id, u.username AS user, b.movie, b.seats, b.snacks_cost, b.payment_method
+    FROM bookings b
+    JOIN users u ON b.user_id = u.id
+";
 $result = $conn->query($sql);
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -23,20 +37,27 @@ $result = $conn->query($sql);
                 <th>User</th>
                 <th>Movie</th>
                 <th>Seats</th>
-                <th>Snacks</th>
-                <th>Payment</th>
+                <th>Snacks Cost</th>
+                <th>Payment Method</th>
                 <th>Actions</th>
             </tr>
-            <?php while ($row = $result->fetch_assoc()) { ?>
+            <?php
+            // Loop through each row and display the data in a table
+            while ($row = $result->fetch_assoc()) {
+            ?>
             <tr>
                 <td><?php echo $row['id']; ?></td>
                 <td><?php echo $row['user']; ?></td>
                 <td><?php echo $row['movie']; ?></td>
                 <td><?php echo $row['seats']; ?></td>
-                <td><?php echo $row['snacks']; ?></td>
+                <td><?php echo "$" . number_format($row['snacks_cost'], 2); ?></td>
                 <td><?php echo $row['payment_method']; ?></td>
                 <td><a href="delete_booking.php?id=<?php echo $row['id']; ?>">Cancel</a></td>
             </tr>
-            <?php } ?>
+            <?php
+            }
+            ?>
         </table>
-    <
+    </main>
+</body>
+</html>

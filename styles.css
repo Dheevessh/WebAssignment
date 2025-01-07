@@ -59,3 +59,100 @@ footer {
     background: #333;
     color: #fff;
 }
+
+.seat-map {
+    display: grid;
+    gap: 10px;
+}
+
+.seat-row {
+    display: flex;
+    justify-content: center;
+}
+
+.seat {
+    width: 40px;
+    height: 40px;
+    background-color: #ddd;
+    border: 1px solid #999;
+    text-align: center;
+    line-height: 40px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.seat.available:hover {
+    background-color: #8bc34a;
+}
+
+.seat.selected {
+    background-color: #ff5722;
+    color: #fff;
+}
+
+.time-bubbles {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+.time-slot {
+    padding: 10px 20px;
+    background-color: #eee;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.time-slot:hover, .time-slot.selected {
+    background-color: #ff5722;
+    color: #fff;
+}
+
+.menu-item {
+    margin: 15px 0;
+}
+
+.menu-item label {
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.confirmation-section {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background-color: #f9f9f9;
+    text-align: center;
+}
+
+.confirmation-section h3 {
+    margin-top: 20px;
+    color: #ff5722;
+}
+
+.confirmation-section ul {
+    list-style: none;
+    padding: 0;
+}
+
+.confirmation-section li {
+    margin: 10px 0;
+}
+
+.selected {
+    background-color: #ffcc00; /* Change this to any color you prefer */
+    color: white;
+}
+
+.movie-item, .time-slot {
+    cursor: pointer;
+}
+
+.time-slot.selected {
+    background-color: #ffcc00;
+    color: white;
+}

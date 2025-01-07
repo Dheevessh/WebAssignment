@@ -5,13 +5,25 @@ include 'db.php';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $username = $_POST['username'];
     $password = $_POST['password'];
-    
+
+    // Check if the username and password are "admin"
+    if ($username === 'admin' && $password === 'admin') {
+        $_SESSION['user'] = $username;
+        $_SESSION['user_id'] = 1;  // Setting a dummy user_id for the admin
+        header("Location: admin.php"); // Redirect to admin panel
+        exit;
+    }
+
+    // Check database for other users
     $sql = "SELECT * FROM users WHERE username='$username' AND password='$password'";
     $result = $conn->query($sql);
 
     if ($result->num_rows > 0) {
+        $user = $result->fetch_assoc();
         $_SESSION['user'] = $username;
-        header("Location: movies.php");
+        $_SESSION['user_id'] = $user['id'];  // Assuming 'id' is the column storing the user ID
+        header("Location: movies.php"); // Redirect to user dashboard
+        exit;
     } else {
         $error = "Invalid username or password!";
     }
