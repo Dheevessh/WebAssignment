@@ -1,10 +1,10 @@
 <?php
-$host = 'localhost';
-$user = 'root';
-$password = ''; // Replace with your MySQL password if set
-$database = 'cinema_booking';
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "cinema_booking";
 
-$conn = new mysqli($host, $user, $password, $database);
+$conn = new mysqli($servername, $username, $password, $dbname);
 
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
