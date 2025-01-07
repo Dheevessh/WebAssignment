@@ -1,37 +1,62 @@
-<?php include('includes/db.php'); ?>
+<?php
+session_start();
+if (!isset($_SESSION['user'])) {
+    header("Location: login.php");
+    exit();
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/style.css">
-    <title>Cinema Booking</title>
+    <title>Cinema Booking System</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="script.js" defer></script>
 </head>
 <body>
     <header>
-        <div class="container">
-            <h1>Cinema Booking</h1>
+        <div class="header-container">
+            <h1 class="logo">CinemaHub</h1>
             <nav>
-                <a href="login.php">Login</a>
-                <a href="register.php">Register</a>
+                <button class="btn" onclick="window.location.href='login.php';">Login</button>
+                <button class="btn" onclick="window.location.href='register.php';">Register</button>
             </nav>
         </div>
     </header>
+
     <main>
-        <h2>Available Movies</h2>
-        <div class="movies">
-            <?php
-            $result = $conn->query("SELECT * FROM movies");
-            while ($row = $result->fetch_assoc()) {
-                echo "<div class='movie'>";
-                echo "<h3>{$row['title']}</h3>";
-                echo "<p>{$row['description']}</p>";
-                echo "<a href='book.php?id={$row['id']}'>Book Now</a>";
-                echo "</div>";
-            }
-            ?>
-        </div>
+        <!-- Section to display movies -->
+        <section class="movie-section">
+            <h2>Available Movies</h2>
+            <div class="movie-list">
+                <div class="movie-item" data-movie="Avengers">
+                    <img src="images/avengers.jpg" alt="Avengers" class="movie-btn">
+                    <h3>Avengers</h3>
+                </div>
+                <div class="movie-item" data-movie="Inception">
+                    <img src="images/inception.jpg" alt="Inception" class="movie-btn">
+                    <h3>Inception</h3>
+                </div>
+                <div class="movie-item" data-movie="Titanic">
+                    <img src="images/titanic.jpg" alt="Titanic" class="movie-btn">
+                    <h3>Titanic</h3>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section for seat selection -->
+        <section id="seat-selection-section" style="display: none;">
+            <h2>Select Your Seats</h2>
+            <div class="seat-grid">
+                <!-- Dynamically created grid of seats -->
+            </div>
+            <button id="next-to-menu" class="btn" disabled>Next</button>
+        </section>
     </main>
-    <script src="js/script.js"></script>
+
+    <footer>
+        <p>&copy; 2025 CinemaHub. All rights reserved.</p>
+    </footer>
 </body>
 </html>
