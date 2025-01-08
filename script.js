@@ -36,4 +36,45 @@ document.addEventListener('DOMContentLoaded', () => {
     nextButton.addEventListener('click', () => {
         window.location.href = 'menu.php';
     });
+
+    function selectMovie(movie, element) {
+        selectedMovie = movie;
+        document.getElementById('selected-movie').value = movie;
+    
+        // Update UI for selected movie
+        const movieItems = document.querySelectorAll('.movie-item');
+        movieItems.forEach(item => item.classList.remove('selected'));
+        element.closest('.movie-item').classList.add('selected');
+    
+        // Show seat selection section
+        document.getElementById('seat-selection').classList.remove('hidden');
+    }
+    
+    function selectTime(time, id) {
+        selectedTime = time;
+        document.getElementById('selected-time').value = time;
+    
+        // Update UI for selected time
+        const timeSlots = document.querySelectorAll('.time-slot');
+        timeSlots.forEach(slot => slot.classList.remove('selected'));
+        document.getElementById(`time-${id}`).classList.add('selected');
+    }
+    
+    function selectSeat(seatId) {
+        const seat = document.getElementById(seatId);
+        if (selectedSeats.includes(seatId)) {
+            // Deselect seat
+            selectedSeats = selectedSeats.filter(s => s !== seatId);
+            seat.classList.remove('selected');
+        } else {
+            // Select seat
+            selectedSeats.push(seatId);
+            seat.classList.add('selected');
+        }
+        document.getElementById('selected-seats').value = selectedSeats.join(', ');
+    
+        // Update people count
+        document.getElementById('people').value = selectedSeats.length;
+    }
+    
 });

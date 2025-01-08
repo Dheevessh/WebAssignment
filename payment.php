@@ -2,72 +2,55 @@
 session_start();
 include 'db.php'; // Include the database connection
 
-// Retrieve user_id from session
-$userId = $_SESSION['user_id'] ?? null;
+// Check if the form is submitted
+if (isset($_POST['payment_complete'])) {
+    // Retrieve user_id from session
+    $userId = $_SESSION['user_id'] ?? null;
 
-// If user_id is not found in the session, redirect to login page
-if (!$userId) {
-    header("Location: login.php");
-    exit;
-}
-
-// Retrieve the booking details and snacks from the POST request
-$movie = $_POST['movie'] ?? '';
-$time = $_POST['time'] ?? '';
-$people = $_POST['people'] ?? '';
-$seats = (int)($_POST['seats'] ?? 0); // Ensure seats is an integer
-
-// Retrieve snack quantities
-$popcorn = (int)($_POST['popcorn'] ?? 0); // Ensure popcorn is an integer
-$soda = (int)($_POST['soda'] ?? 0);       // Ensure soda is an integer
-$nachos = (int)($_POST['nachos'] ?? 0);     // Ensure nachos is an integer
-
-// Calculate total snacks cost
-$popcornCost = $popcorn * 5;
-$sodaCost = $soda * 3;
-$nachosCost = $nachos * 4;
-$totalSnacksCost = $popcornCost + $sodaCost + $nachosCost;
-
-// Assume seat cost is $10 per person
-$seatCost = 10;
-$totalSeatCost = $seats * $seatCost;
-
-// Calculate total price (seats + snacks)
-$totalPrice = $totalSnacksCost + $totalSeatCost;
-
-// Retrieve showtime_id based on the movie and time
-$sqlShowtime = "SELECT id FROM showtimes WHERE show_time = ? AND movie_id = (SELECT id FROM movies WHERE title = ?)";
-$stmtShowtime = $conn->prepare($sqlShowtime);
-$stmtShowtime->bind_param("ss", $time, $movie);
-$stmtShowtime->execute();
-$resultShowtime = $stmtShowtime->get_result();
-
-// Check if the showtime exists
-if ($resultShowtime->num_rows > 0) {
-    $showtime = $resultShowtime->fetch_assoc();
-    $showtimeId = $showtime['id']; // Get the showtime_id
-
-    // Handle form submission for payment
-    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['payment_complete'])) {
-        $paymentMethod = $_POST['payment_method'] ?? '';
-
-        // Prepare SQL to insert booking data into the database
-        $stmt = $conn->prepare("INSERT INTO bookings (user_id, showtime_id, seats, movie, show_time, snacks_cost, payment_method, total_price, payment_status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'pending')");
-        $stmt->bind_param("iiissdsd", $userId, $showtimeId, $seats, $movie, $time, $totalSnacksCost, $paymentMethod, $totalPrice);
-
-        if ($stmt->execute()) {
-            // Set flag for successful payment
-            $paymentSuccess = true;
-        } else {
-            $error = "Error storing booking data!";
-        }
+    // If user_id is not found in the session, redirect to login page
+    if (!$userId) {
+        header("Location: login.php");
+        exit;
     }
-} else {
-    $error = "Invalid movie or showtime!";
+
+    // Retrieve the booking details and snacks from the POST request
+    $movie = $_POST['movie'] ?? '';
+    $time = $_POST['time'] ?? '';
+    $people = $_POST['people'] ?? 0;
+    $seats = $_POST['selected-seats'] ?? '';
+    $paymentMethod = $_POST['payment_method'] ?? '';
+
+    // Calculate total price and snacks cost (example calculation logic)
+    $popcorn = $_POST['popcorn'] ?? 0;
+    $soda = $_POST['soda'] ?? 0;
+    $nachos = $_POST['nachos'] ?? 0;
+    $totalSnacksCost = ($popcorn * 5) + ($soda * 3) + ($nachos * 4);
+    $seatCost = 10;
+    $totalSeatCost = $people * $seatCost;
+    $totalPrice = $totalSnacksCost + $totalSeatCost;
+
+    // Insert the booking into the database
+    $paymentMethod = $_POST['payment_method'] ?? '';
+
+    $sql = "INSERT INTO bookings (user_id, movie, time, people, seats, total_price, payment_method) VALUES (?, ?, ?, ?, ?, ?, ?)";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("issiiis", $userId, $movie, $time, $people, $seats, $totalPrice, $paymentMethod);
+    
+    $stmt->execute();
+
+    if ($stmt->execute()) {
+        $paymentSuccess = true;
+        // Redirect to a confirmation page or display a success message
+        header("Location: confirmation.php?success=1");
+        exit;
+    } else {
+        $error = "Error: " . $stmt->error;
+    }
 }
+
 ?>
 
-<!-- HTML for the payment form (same as before) -->
+<!-- HTML for the payment form -->
 <!DOCTYPE html>
 <html lang="en">
 <head>

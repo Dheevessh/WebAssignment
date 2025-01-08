@@ -11,15 +11,51 @@ if (!isset($_SESSION['user_id'])) {
 // Check if the user is logged in or proceeding as a guest
 $isLoggedIn = isset($_SESSION['user']);
 $isGuest = isset($_SESSION['guest']) && $_SESSION['guest'] === true;
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    include 'db.php';
+
+    // Retrieve form inputs
+    $movie = $_POST['movie'];
+    $time = $_POST['time'];
+    $people = $_POST['people'];
+    $selectedSeats = $_POST['selected-seats'];
+    $user_id = $_SESSION['user_id']; // Assuming user_id is stored in the session
+
+    // Prepare and bind statement
+    $stmt = $conn->prepare("INSERT INTO bookings (user_id, movie, time, people, seats) VALUES (?, ?, ?, ?, ?)");
+    $stmt->bind_param("issis", $user_id, $movie, $time, $people, $selectedSeats);
+
+    // Execute and handle the result
+    if ($stmt->execute()) {
+        echo "Booking successful!";
+    } else {
+        echo "Error: " . $stmt->error;
+    }
+
+    // Close connection
+    $stmt->close();
+    $conn->close();
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CinemaHub - Movies</title>
     <link rel="stylesheet" href="styles.css">
     <script src="script.js" defer></script>
+    <style>
+        .hidden { display: none; }
+        .selected { background-color: #4caf50; color: white; }
+        .seat { width: 30px; height: 30px; border: 1px solid #ccc; margin: 5px; text-align: center; cursor: pointer; }
+        .seat.selected { background-color: #4caf50; color: white; }
+        .time-slot { cursor: pointer; padding: 10px; border: 1px solid #ccc; border-radius: 20px; margin: 5px; display: inline-block; }
+        .time-slot.selected { background-color: #4caf50; color: white; }
+    </style>
 </head>
 <body>
     <header>
@@ -41,7 +77,6 @@ $isGuest = isset($_SESSION['guest']) && $_SESSION['guest'] === true;
         <section class="movie-section">
             <h2>Available Movies</h2>
             <div class="movie-list">
-                <!-- Example movies (these can be dynamically loaded later) -->
                 <?php
                 $movies = ["Movie 1", "Movie 2", "Movie 3", "Movie 4", "Movie 5"];
                 foreach ($movies as $movie) {
@@ -57,43 +92,52 @@ $isGuest = isset($_SESSION['guest']) && $_SESSION['guest'] === true;
         </section>
 
         <section id="seat-selection" class="hidden">
-            <h2>Select Your Show</h2>
-            <form id="booking-form" action="menu.php" method="POST">
-                <input type="hidden" name="movie" id="selected-movie" value="">
-                <input type="hidden" name="showtime_id" id="selected-showtime-id" value="">
+    <h2>Select Your Show</h2>
+    <form id="booking-form" action="menu.php" method="POST">
+        <input type="hidden" name="movie" id="selected-movie" value="">
+        <input type="hidden" name="showtime_id" id="selected-showtime-id" value="">
+        <input type="hidden" name="movie" id="selected-movie" value="">
+    <input type="hidden" name="time" id="selected-time" value="">
+    <input type="hidden" name="selected-seats" id="selected-seats" value="">
+    <input type="hidden" name="people" id="people" value="">
 
-                <h3>Available Time Slots:</h3>
-                <div class="time-bubbles">
-                    <span class="time-slot" id="time-1" onclick="selectTime('10:00 AM', 1)">10:00 AM</span>
-                    <span class="time-slot" id="time-2" onclick="selectTime('01:00 PM', 2)">01:00 PM</span>
-                    <span class="time-slot" id="time-3" onclick="selectTime('04:00 PM', 3)">04:00 PM</span>
-                    <span class="time-slot" id="time-4" onclick="selectTime('07:00 PM', 4)">07:00 PM</span>
-                </div>
-                <input type="hidden" name="time" id="selected-time" required>
+    
+        <h3>Available Time Slots:</h3>
+        <div class="time-bubbles">
+            <span class="time-slot" id="time-1" onclick="selectTime('10:00 AM', 1)">10:00 AM</span>
+            <span class="time-slot" id="time-2" onclick="selectTime('01:00 PM', 2)">01:00 PM</span>
+            <span class="time-slot" id="time-3" onclick="selectTime('04:00 PM', 3)">04:00 PM</span>
+            <span class="time-slot" id="time-4" onclick="selectTime('07:00 PM', 4)">07:00 PM</span>
+        </div>
+        <input type="hidden" name="time" id="selected-time" required>
 
-                <label for="people">Number of People:</label>
-                <input type="number" name="people" id="people" min="1" max="10" required>
+        <label for="people">Number of People:</label>
+        <input type="number" name="people" id="people" min="1" max="10" required readonly>
 
-                <h3>Select Seats:</h3>
-                <div class="seat-map">
-                    <?php
-                    // Render a 10x5 grid of seats
-                    for ($row = 1; $row <= 10; $row++) {
-                        echo '<div class="seat-row">';
-                        for ($col = 1; $col <= 5; $col++) {
-                            $seatId = chr(64 + $row) . $col; // Seat IDs like A1, B1, etc.
-                            echo "<div class='seat available' id='$seatId' onclick='selectSeat(\"$seatId\")'>$seatId</div>";
-                        }
-                        echo '</div>';
-                    }
-                    ?>
-                </div>
+        <h3>Select Seats:</h3>
+        <div class="seat-map">
+            <?php
+            for ($row = 1; $row <= 10; $row++) {
+                echo '<div class="seat-row">';
+                for ($col = 1; $col <= 5; $col++) {
+                    $seatId = chr(64 + $row) . $col; // Seat IDs like A1, B1, etc.
+                    echo "<div class='seat available' id='$seatId' onclick='selectSeat(\"$seatId\")'>$seatId</div>";
+                }
+                echo '</div>';
+            }
+            ?>
+        </div>
 
-                <input type="hidden" name="selected-seats" id="selected-seats" required>
+        <input type="hidden" name="selected-seats" id="selected-seats" required>
 
-                <button type="submit">Next</button>
-            </form>
-        </section>
+        <button type="submit">Next</button>
+    </form>
+
+
+</form>
+
+</section>
+
     </main>
 
     <footer>
@@ -109,14 +153,16 @@ $isGuest = isset($_SESSION['guest']) && $_SESSION['guest'] === true;
         function selectMovie(movie, element) {
             selectedMovie = movie;
             document.getElementById('selected-movie').value = movie;
-            
+
             // Remove previously selected movie styling
             const movieItems = document.querySelectorAll('.movie-item');
             movieItems.forEach(item => item.classList.remove('selected'));
 
             // Apply new selection styling
             element.closest('.movie-item').classList.add('selected');
-            alert(`You selected ${movie}`);
+
+            // Show seat-selection section
+            document.getElementById('seat-selection').classList.remove('hidden');
         }
 
         function selectTime(time, id) {
@@ -131,7 +177,6 @@ $isGuest = isset($_SESSION['guest']) && $_SESSION['guest'] === true;
 
             // Apply new selection styling
             document.getElementById(`time-${id}`).classList.add('selected');
-            alert(`You selected ${time}`);
         }
 
         function selectSeat(seatId) {
@@ -146,6 +191,9 @@ $isGuest = isset($_SESSION['guest']) && $_SESSION['guest'] === true;
                 seat.classList.add('selected');
             }
             document.getElementById('selected-seats').value = selectedSeats.join(', ');
+
+            // Update people count
+            document.getElementById('people').value = selectedSeats.length;
         }
     </script>
 </body>
