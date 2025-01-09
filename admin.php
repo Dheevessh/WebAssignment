@@ -10,12 +10,19 @@ if (!isset($_SESSION['user']) || $_SESSION['user'] !== 'admin') {
 include 'db.php';
 
 // Query to fetch all booking data with user details
-$sql = "
+$bookings_sql = "
     SELECT b.id, u.username AS user, b.movie, b.time, b.seats, b.total_price, b.payment_method
     FROM bookings b
     JOIN users u ON b.user_id = u.id
 ";
-$result = $conn->query($sql);
+$bookings_result = $conn->query($bookings_sql);
+
+// Query to fetch all inquiries from the contacts table
+$inquiries_sql = "
+    SELECT name, email, contact_number, enquiry
+    FROM contacts
+";
+$inquiries_result = $conn->query($inquiries_sql);
 ?>
 
 <!DOCTYPE html>
@@ -111,9 +118,9 @@ $result = $conn->query($sql);
                 <th>Actions</th>
             </tr>
             <?php
-            // Loop through each row and display the data in a table
-            if ($result->num_rows > 0) {
-                while ($row = $result->fetch_assoc()) {
+            // Loop through each row and display the booking data
+            if ($bookings_result->num_rows > 0) {
+                while ($row = $bookings_result->fetch_assoc()) {
             ?>
             <tr>
                 <td><?php echo htmlspecialchars($row['id']); ?></td>
@@ -129,6 +136,33 @@ $result = $conn->query($sql);
                 }
             } else {
                 echo "<tr><td colspan='8'>No bookings found.</td></tr>";
+            }
+            ?>
+        </table>
+
+        <h2>All Inquiries</h2>
+        <table>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Contact Number</th>
+                <th>Enquiry</th>
+            </tr>
+            <?php
+            // Loop through each row and display the inquiry data
+            if ($inquiries_result->num_rows > 0) {
+                while ($row = $inquiries_result->fetch_assoc()) {
+            ?>
+            <tr>
+                <td><?php echo htmlspecialchars($row['name']); ?></td>
+                <td><?php echo htmlspecialchars($row['email']); ?></td>
+                <td><?php echo htmlspecialchars($row['contact_number']); ?></td>
+                <td><?php echo htmlspecialchars($row['enquiry']); ?></td>
+            </tr>
+            <?php
+                }
+            } else {
+                echo "<tr><td colspan='4'>No inquiries found.</td></tr>";
             }
             ?>
         </table>

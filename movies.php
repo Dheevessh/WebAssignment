@@ -46,7 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CinemaHub - Movies</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles1.css">
     <script src="script.js" defer></script>
     <style>
         .hidden { display: none; }
@@ -58,19 +58,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     </style>
 </head>
 <body>
+    
     <header>
         <div class="header-container">
             <h1 class="logo">CinemaHub</h1>
             <nav>
-                <?php if ($isLoggedIn): ?>
-                    <p>Welcome, <?php echo $_SESSION['user']; ?>!</p>
-                    <button class="btn" onclick="window.location.href='logout.php';">Logout</button>
-                <?php elseif ($isGuest): ?>
-                    <button class="btn" onclick="window.location.href='login.php';">Login</button>
-                    <button class="btn" onclick="window.location.href='register.php';">Register</button>
-                <?php endif; ?>
-            </nav>
-        </div>
+    <?php if ($isLoggedIn): ?>
+        <p>Welcome, <?php echo $_SESSION['user']; ?>!</p>
+        <button class="btn" onclick="window.location.href='logout.php';">Logout</button>
+    <?php elseif ($isGuest): ?>
+        <button class="btn" onclick="window.location.href='login.php';">Login</button>
+        <button class="btn" onclick="window.location.href='register.php';">Register</button>
+    <?php endif; ?>
+    <button class="btn" onclick="window.location.href='contact.php';">Contact Us</button>
+</nav>
     </header>
 
     <main>
@@ -196,5 +197,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             document.getElementById('people').value = selectedSeats.length;
         }
     </script>
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<section id="contact" class="section">
+        <h2>Contact Me</h2>
+		<p>Feel free to reach out to me via the form below or connect on :</p>
+            <div class="social-icons">
+                <a href="https://www.facebook.com/share/JrjZpezD3VM854bg/" class="social-button facebook"><i class="fab fa-facebook"></i> Facebook</a>
+                <a href="https://x.com/nyetafiq" class="social-button twitter"><i class="fab fa-twitter"></i> Twitter</a>
+                <a href="https://www.instagram.com/think.about_hazz?igsh=MXZxbGc2MWg2bTRwZw==" class="social-button instagram"><i class="fab fa-instagram"></i> Instagram</a>
+                <a href="https://wa.link/slsumm" class="social-button whatsapp"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+            </div>
+    </section>
+
+
 </body>
 </html>

@@ -1,0 +1,180 @@
+/* General Styles */
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    background: #000;
+    color: #fff;
+}
+
+/* Header */
+header {
+    background: #111;
+    padding: 15px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+}
+
+.logo {
+    font-size: 28px;
+    font-weight: 700;
+    color: #ffc107;
+}
+
+.navbar {
+    display: flex;
+    gap: 20px;
+}
+
+.nav-link {
+    color: #fff;
+    text-decoration: none;
+    font-size: 16px;
+    transition: color 0.3s;
+}
+
+.nav-link:hover {
+    color: #ffc107;
+}
+
+/* Buttons */
+.btn {
+    background: #ffc107;
+    border: none;
+    padding: 10px 20px;
+    color: #111;
+    cursor: pointer;
+    border-radius: 25px;
+    font-weight: 600;
+    transition: background 0.3s, transform 0.2s;
+}
+
+.btn:hover {
+    background: #e0a800;
+    transform: scale(1.05);
+}
+
+/* Main Content */
+main {
+    padding: 40px 20px;
+    max-width: 1200px;
+    margin: auto;
+}
+
+.movie-section {
+    margin-bottom: 50px;
+}
+
+.movie-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    justify-content: center;
+}
+
+.movie-item {
+    background: #222;
+    border-radius: 15px;
+    padding: 20px;
+    width: 220px;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.movie-item:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.7);
+}
+
+.movie-item img {
+    border-radius: 10px;
+    margin-bottom: 15px;
+    width: 100%;
+}
+
+.movie-item h4 {
+    color: #ffc107;
+    margin-bottom: 10px;
+}
+
+/* Footer */
+footer {
+    background: #111;
+    color: #fff;
+    text-align: center;
+    padding: 20px 0;
+    font-size: 14px;
+}
+
+.social-icons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.social-button {
+    text-decoration: none;
+    font-size: 20px;
+    padding: 10px;
+    border-radius: 50%;
+    color: #fff;
+    background: #333;
+    transition: background 0.3s;
+}
+
+.social-button:hover {
+    background: #ffc107;
+}
+
+/* Seats */
+.seat-map {
+    display: grid;
+    gap: 15px;
+    justify-content: center;
+}
+
+.seat {
+    width: 50px;
+    height: 50px;
+    background-color: #333;
+    border: 1px solid #666;
+    text-align: center;
+    line-height: 50px;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: background-color 0.3s;
+}
+
+.seat.available:hover {
+    background-color: #8bc34a;
+}
+
+.seat.selected {
+    background-color: #ffc107;
+    color: #111;
+}
+
+/* Time Slots */
+.time-bubbles {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    margin: 30px 0;
+}
+
+.time-slot {
+    padding: 12px 25px;
+    background-color: #333;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.time-slot:hover, .time-slot.selected {
+    background-color: #ffc107;
+    color: #111;
+}
