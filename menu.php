@@ -44,7 +44,7 @@ $seats = htmlspecialchars($_POST['selected-seats'] ?? '', ENT_QUOTES, 'UTF-8');
                 </div>
 
                 <div class="menu-item">
-                    <img src="images/soda.jpg" alt="Soda" class="snack-image">
+                    <img src="soda.jpg" alt="Soda" class="snack-image">
                     <label for="soda">Soda (RM3)</label>
                     <div class="snack-quantity">
                         <input type="number" name="soda" id="soda" value="0" min="0" class="snack-amount" required>
@@ -52,7 +52,7 @@ $seats = htmlspecialchars($_POST['selected-seats'] ?? '', ENT_QUOTES, 'UTF-8');
                 </div>
 
                 <div class="menu-item">
-                    <img src="images/nachos.jpg" alt="Nachos" class="snack-image">
+                    <img src="nachos.jpg" alt="Nachos" class="snack-image">
                     <label for="nachos">Nachos (RM4)</label>
                     <div class="snack-quantity">
                         <input type="number" name="nachos" id="nachos" value="0" min="0" class="snack-amount" required>

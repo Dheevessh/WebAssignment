@@ -228,13 +228,10 @@ button[type="submit"] {
 }
 
 button[type="submit"]:hover {
-    background-color: #45a049; /* Slightly darker green */
+    background-color: #e6b800; /* Slightly darker green */
     transform: scale(1.05);
 }
 
-button[type="submit"]:active {
-    background-color: #388e3c; /* Even darker green on click */
-}
 
 /* Movie Item Color Change on Click */
 .movie-item.clicked {

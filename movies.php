@@ -41,47 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <title>CinemaHub - Movies</title>
     <link rel="stylesheet" href="styles2.css">
     <script src="script1.js" defer></script>
-    <style>
-        .hidden { display: none; }
-        .selected { background-color: #4caf50; color: white; }
-        .seat {
-            width: 30px;
-            height: 30px;
-            border: 1px solid #ccc;
-            margin: 5px;
-            text-align: center;
-            line-height: 30px;
-            cursor: pointer;
-        }
-        .seat.selected { background-color: #4caf50; color: white; }
-        .seat.unavailable { background-color: #d9534f; cursor: not-allowed; }
-        .time-slot {
-            cursor: pointer;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 20px;
-            margin: 5px;
-            display: inline-block;
-        }
-        .time-slot.selected { background-color: #4caf50; color: white; }
-        .screen {
-            width: 80%;
-            height: 20px;
-            background-color: #333;
-            color: white;
-            text-align: center;
-            line-height: 20px;
-            margin: 20px auto;
-            border-radius: 10px;
-        }
-        .seat-map {
-            display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            gap: 10px;
-            justify-content: center;
-            margin-top: 20px;
-        }
-    </style>
+
 </head>
 <body>
 <header>
