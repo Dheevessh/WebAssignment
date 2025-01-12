@@ -2,52 +2,66 @@
 session_start();
 include 'db.php'; // Include the database connection
 
-// Check if the form is submitted
 if (isset($_POST['payment_complete'])) {
-    // Retrieve user_id from session
+    // Ensure user is logged in
     $userId = $_SESSION['user_id'] ?? null;
-
-    // If user_id is not found in the session, redirect to login page
     if (!$userId) {
         header("Location: login.php");
         exit;
     }
 
-    // Retrieve the booking details and snacks from the POST request
+    // Retrieve form data
     $movie = $_POST['movie'] ?? '';
     $time = $_POST['time'] ?? '';
     $people = $_POST['people'] ?? 0;
     $seats = $_POST['selected-seats'] ?? '';
     $paymentMethod = $_POST['payment_method'] ?? '';
 
-    // Calculate total price and snacks cost (example calculation logic)
+    // Snack quantities and cost calculations
     $popcorn = $_POST['popcorn'] ?? 0;
     $soda = $_POST['soda'] ?? 0;
     $nachos = $_POST['nachos'] ?? 0;
-    $totalSnacksCost = ($popcorn * 5) + ($soda * 3) + ($nachos * 4);
-    $seatCost = 10;
-    $totalSeatCost = $people * $seatCost;
+    $totalSnacksCost = $popcorn * 5 + $soda * 3 + $nachos * 4;
+
+    // Calculate total cost (seats cost $10 per person)
+    $totalSeatCost = $people * 10;
     $totalPrice = $totalSnacksCost + $totalSeatCost;
 
-    // Insert the booking into the database
-    $paymentMethod = $_POST['payment_method'] ?? '';
-
-    $sql = "INSERT INTO bookings (user_id, movie, time, people, seats, total_price, payment_method) VALUES (?, ?, ?, ?, ?, ?, ?)";
+    // Insert booking details into the database
+    $sql = "INSERT INTO bookings (user_id, movie, showtime, people, seats, total_price, payment_method, popcorn_qty, soda_qty, nachos_qty, snacks_cost) 
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("issiiis", $userId, $movie, $time, $people, $seats, $totalPrice, $paymentMethod);
-    
-    $stmt->execute();
 
-    if ($stmt->execute()) {
-        $paymentSuccess = true;
-        // Redirect to a confirmation page or display a success message
-        header("Location: confirmation.php?success=1");
-        exit;
+    if ($stmt) {
+        $stmt->bind_param(
+            "issisisiidi", 
+            $userId, 
+            $movie, 
+            $time, 
+            $people, 
+            $seats, 
+            $totalPrice, 
+            $paymentMethod, 
+            $popcorn, 
+            $soda, 
+            $nachos, 
+            $totalSnacksCost
+        );
+
+        if ($stmt->execute()) {
+            header("Location: confirmation.php?success=1");
+            exit;
+        } else {
+            echo "Error: Unable to process your payment. Please try again later.";
+        }
     } else {
-        $error = "Error: " . $stmt->error;
+        echo "Error: Could not prepare the statement.";
     }
-}
 
+    // Close the statement and connection
+    $stmt->close();
+    $conn->close();
+}
 ?>
 
 <!-- HTML for the payment form -->
@@ -58,14 +72,6 @@ if (isset($_POST['payment_complete'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CinemaHub - Payment</title>
     <link rel="stylesheet" href="styles.css">
-    <script>
-        // JavaScript to show pop-up if payment is successful
-        window.onload = function() {
-            <?php if (isset($paymentSuccess) && $paymentSuccess): ?>
-                alert("Thank you for your purchase!");
-            <?php endif; ?>
-        };
-    </script>
 </head>
 <body>
     <header>
@@ -78,24 +84,20 @@ if (isset($_POST['payment_complete'])) {
     <main>
         <section class="confirmation-section">
             <h2>Payment Details</h2>
-            <form method="POST">
-                <h3>Booking Details:</h3>
-                <ul>
-                    <li><strong>Movie:</strong> <?php echo htmlspecialchars($movie); ?></li>
-                    <li><strong>Showtime:</strong> <?php echo htmlspecialchars($time); ?></li>
-                    <li><strong>Number of People:</strong> <?php echo htmlspecialchars($people); ?></li>
-                    <li><strong>Seats:</strong> <?php echo htmlspecialchars($seats); ?></li>
-                </ul>
+            <form method="POST" action="payment.php">
+                <input type="hidden" name="movie" value="<?php echo htmlspecialchars($_POST['movie'] ?? ''); ?>">
+                <input type="hidden" name="time" value="<?php echo htmlspecialchars($_POST['time'] ?? ''); ?>">
+                <input type="hidden" name="people" value="<?php echo htmlspecialchars($_POST['people'] ?? 0); ?>">
+                <input type="hidden" name="selected-seats" value="<?php echo htmlspecialchars($_POST['selected-seats'] ?? ''); ?>">
 
-                <h3>Snacks and Drinks:</h3>
-                <ul>
-                    <li><strong>Popcorn:</strong> <?php echo htmlspecialchars($popcorn); ?> x $5 = $<?php echo htmlspecialchars($popcornCost); ?></li>
-                    <li><strong>Soda:</strong> <?php echo htmlspecialchars($soda); ?> x $3 = $<?php echo htmlspecialchars($sodaCost); ?></li>
-                    <li><strong>Nachos:</strong> <?php echo htmlspecialchars($nachos); ?> x $4 = $<?php echo htmlspecialchars($nachosCost); ?></li>
-                </ul>
+                <label for="popcorn">Popcorn:</label>
+                <input type="number" id="popcorn" name="popcorn" min="0" value="0"><br>
 
-                <h3>Total Cost:</h3>
-                <p><strong>$<?php echo htmlspecialchars($totalPrice); ?></strong> (seats and snacks).</p>
+                <label for="soda">Soda:</label>
+                <input type="number" id="soda" name="soda" min="0" value="0"><br>
+
+                <label for="nachos">Nachos:</label>
+                <input type="number" id="nachos" name="nachos" min="0" value="0"><br>
 
                 <h3>Select Payment Method:</h3>
                 <input type="radio" id="online_banking" name="payment_method" value="Online Banking" required>
@@ -103,11 +105,8 @@ if (isset($_POST['payment_complete'])) {
                 <input type="radio" id="card" name="payment_method" value="Card">
                 <label for="card">Card</label><br>
 
-                <button type="submit" name="payment_complete" class="btn">Payment Complete</button>
+                <button type="submit" name="payment_complete" class="btn">Complete Payment</button>
             </form>
-
-            <?php if (isset($error)) echo "<p class='error'>$error</p>"; ?>
-
             <button class="btn" onclick="window.location.href='movies.php';">Back to Movies</button>
         </section>
     </main>

@@ -11,15 +11,15 @@ include 'db.php';
 
 // Query to fetch all booking data with user details
 $bookings_sql = "
-    SELECT b.id, u.username AS user, b.movie, b.time, b.seats, b.total_price, b.payment_method
+    SELECT b.booking_id, u.username, b.movie, b.showtime, b.seats, b.total_price, b.payment_method, b.popcorn_qty, b.soda_qty, b.nachos_qty, b.snacks_cost, b.created_at
     FROM bookings b
-    JOIN users u ON b.user_id = u.id
+    JOIN users u ON b.user_id = u.user_id
 ";
 $bookings_result = $conn->query($bookings_sql);
 
 // Query to fetch all inquiries from the contacts table
 $inquiries_sql = "
-    SELECT name, email, contact_number, enquiry
+    SELECT id, name, email, contact_number, enquiry, submitted_at
     FROM contacts
 ";
 $inquiries_result = $conn->query($inquiries_sql);
@@ -28,75 +28,14 @@ $inquiries_result = $conn->query($inquiries_sql);
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<link rel="stylesheet" href="admin.css">
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Panel - CinemaHub</title>
     <link rel="stylesheet" href="styles.css">
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f8f9fa;
-        }
-
-        header {
-            background-color: #343a40;
-            color: white;
-            padding: 1rem 2rem;
-            text-align: center;
-        }
-
-        main {
-            padding: 2rem;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 1rem;
-            background-color: white;
-        }
-
-        table th, table td {
-            padding: 1rem;
-            border: 1px solid #dee2e6;
-            text-align: center;
-        }
-
-        table th {
-            background-color: #6c757d;
-            color: white;
-        }
-
-        table tr:nth-child(even) {
-            background-color: #f2f2f2;
-        }
-
-        a {
-            text-decoration: none;
-            color: #dc3545;
-            font-weight: bold;
-        }
-
-        a:hover {
-            text-decoration: underline;
-        }
-
-        .btn-logout {
-            margin-top: 1rem;
-            display: inline-block;
-            padding: 0.5rem 1rem;
-            background-color: #dc3545;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        .btn-logout:hover {
-            background-color: #c82333;
-        }
+        /* Add your styles here */
     </style>
 </head>
 <body>
@@ -115,27 +54,32 @@ $inquiries_result = $conn->query($inquiries_sql);
                 <th>Seats</th>
                 <th>Total Price</th>
                 <th>Payment Method</th>
+                <th>Snacks (Popcorn, Soda, Nachos)</th>
+                <th>Snacks Cost</th>
+                <th>Created At</th>
                 <th>Actions</th>
             </tr>
             <?php
-            // Loop through each row and display the booking data
             if ($bookings_result->num_rows > 0) {
                 while ($row = $bookings_result->fetch_assoc()) {
             ?>
             <tr>
-                <td><?php echo htmlspecialchars($row['id']); ?></td>
-                <td><?php echo htmlspecialchars($row['user']); ?></td>
+                <td><?php echo htmlspecialchars($row['booking_id']); ?></td>
+                <td><?php echo htmlspecialchars($row['username']); ?></td>
                 <td><?php echo htmlspecialchars($row['movie']); ?></td>
-                <td><?php echo htmlspecialchars($row['time']); ?></td>
+                <td><?php echo htmlspecialchars($row['showtime']); ?></td>
                 <td><?php echo htmlspecialchars($row['seats']); ?></td>
                 <td><?php echo "$" . number_format($row['total_price'], 2); ?></td>
                 <td><?php echo htmlspecialchars($row['payment_method']); ?></td>
-                <td><a href="delete_booking.php?id=<?php echo htmlspecialchars($row['id']); ?>" onclick="return confirm('Are you sure you want to delete this booking?');">Delete</a></td>
+                <td><?php echo "{$row['popcorn_qty']} / {$row['soda_qty']} / {$row['nachos_qty']}"; ?></td>
+                <td><?php echo "$" . number_format($row['snacks_cost'], 2); ?></td>
+                <td><?php echo htmlspecialchars($row['created_at']); ?></td>
+                <td><a href="delete_booking.php?id=<?php echo htmlspecialchars($row['booking_id']); ?>" onclick="return confirm('Are you sure you want to delete this booking?');">Delete</a></td>
             </tr>
             <?php
                 }
             } else {
-                echo "<tr><td colspan='8'>No bookings found.</td></tr>";
+                echo "<tr><td colspan='11'>No bookings found.</td></tr>";
             }
             ?>
         </table>
@@ -143,26 +87,31 @@ $inquiries_result = $conn->query($inquiries_sql);
         <h2>All Inquiries</h2>
         <table>
             <tr>
+                <th>ID</th>
                 <th>Name</th>
                 <th>Email</th>
                 <th>Contact Number</th>
                 <th>Enquiry</th>
+                <th>Submitted At</th>
+                <th>Actions</th>
             </tr>
             <?php
-            // Loop through each row and display the inquiry data
             if ($inquiries_result->num_rows > 0) {
                 while ($row = $inquiries_result->fetch_assoc()) {
             ?>
             <tr>
+                <td><?php echo htmlspecialchars($row['id']); ?></td>
                 <td><?php echo htmlspecialchars($row['name']); ?></td>
                 <td><?php echo htmlspecialchars($row['email']); ?></td>
                 <td><?php echo htmlspecialchars($row['contact_number']); ?></td>
                 <td><?php echo htmlspecialchars($row['enquiry']); ?></td>
+                <td><?php echo htmlspecialchars($row['submitted_at']); ?></td>
+                <td><a href="delete_inquiry.php?id=<?php echo htmlspecialchars($row['id']); ?>" onclick="return confirm('Are you sure you want to delete this inquiry?');">Delete</a></td>
             </tr>
             <?php
                 }
             } else {
-                echo "<tr><td colspan='4'>No inquiries found.</td></tr>";
+                echo "<tr><td colspan='7'>No inquiries found.</td></tr>";
             }
             ?>
         </table>

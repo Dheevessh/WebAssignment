@@ -19,6 +19,23 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+    function selectMovie(movie) {
+        selectedMovie = movie;
+        document.getElementById('selected-movie').value = movie;
+        document.getElementById('selected-movie-id').value = movieId;
+    
+        // Remove previously selected movie styling
+        const movieItems = document.querySelectorAll('.movie-item');
+        movieItems.forEach(item => item.classList.remove('selected'));
+    
+        // Apply new selection styling
+        element.closest('.movie-item').classList.add('selected');
+    
+        // Show seat-selection section
+        document.getElementById('seat-selection').classList.remove('hidden');
+    }
+
+    
     // Highlight selected movie
     function highlightSelectedMovie(selectedElement) {
         const movieItems = document.querySelectorAll('.movie-btn');
