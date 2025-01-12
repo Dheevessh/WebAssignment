@@ -57,11 +57,23 @@ h2 {
 /* Snack Menu Section */
 .menu-section {
     display: flex;
-    justify-content: space-around;
-    flex-wrap: wrap;
+    flex-wrap: nowrap; /* Ensure no wrapping of items */
+    justify-content: flex-start; /* Align items to the left */
+    overflow-x: auto; /* Allow horizontal scrolling if items overflow */
     gap: 30px;
-    align-items: center;
+    padding: 20px 0;
     margin-top: 30px;
+    padding-left: 15px; /* Optional, for some padding on the left */
+}
+
+/* Remove default scrollbar appearance */
+.menu-section::-webkit-scrollbar {
+    height: 8px; /* Set the height of the scrollbar */
+}
+
+.menu-section::-webkit-scrollbar-thumb {
+    background-color: #fbc02d; /* Scrollbar thumb color */
+    border-radius: 10px;
 }
 
 /* Each Snack Item Styling */
@@ -69,10 +81,11 @@ h2 {
     background-color: rgba(0, 0, 0, 0.6);
     border-radius: 10px;
     padding: 20px;
-    width: 200px;
+    width: 200px; /* Set fixed width for each item */
     text-align: center;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
     transition: transform 0.3s ease;
+    flex-shrink: 0; /* Prevent the item from shrinking */
 }
 
 .menu-item:hover {

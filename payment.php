@@ -71,7 +71,6 @@ if (isset($_POST['payment_complete'])) {
 }
 ?>
 
-
 <!-- HTML for the payment form -->
 <!DOCTYPE html>
 <html lang="en">
@@ -96,9 +95,14 @@ if (isset($_POST['payment_complete'])) {
                 <!-- Hidden inputs to pass booking details -->
                 <input type="hidden" name="movie" value="<?php echo htmlspecialchars($_POST['movie'] ?? ''); ?>">
                 <input type="hidden" name="time" value="<?php echo htmlspecialchars($_POST['time'] ?? ''); ?>">
-                <input type="hidden" name="people" value="<?php echo htmlspecialchars($_POST['people'] ?? 0); ?>">
-                <input type="hidden" name="selected-seats" value="<?php echo htmlspecialchars($_POST['selected-seats'] ?? ''); ?>">
-                
+<input type="hidden" name="people" value="<?php echo htmlspecialchars($_POST['people'] ?? 0); ?>">
+<input type="hidden" name="selected-seats" value="<?php echo htmlspecialchars($_POST['selected-seats'] ?? ''); ?>">
+
+<!-- Hidden inputs for snack quantities -->
+<input type="hidden" name="popcorn" value="<?php echo htmlspecialchars($_POST['popcorn'] ?? 0); ?>">
+<input type="hidden" name="soda" value="<?php echo htmlspecialchars($_POST['soda'] ?? 0); ?>">
+<input type="hidden" name="nachos" value="<?php echo htmlspecialchars($_POST['nachos'] ?? 0); ?>">
+
 
                 <!-- Snack selections (pre-filled) -->
                 <h3>Selected Snacks:</h3>

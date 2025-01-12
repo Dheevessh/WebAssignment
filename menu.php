@@ -35,33 +35,30 @@ $seats = htmlspecialchars($_POST['selected-seats'] ?? '', ENT_QUOTES, 'UTF-8');
                 <input type="hidden" name="selected-seats" value="<?php echo $seats; ?>">
 
                 <!-- Menu items for selecting snacks -->
-                <div class="menu-item">
-                    <label for="popcorn">Popcorn:</label>
-                    <div class="snack-quantity">
-                        <button type="button" class="quantity-btn" id="popcorn-minus">-</button>
-                        <input type="int" name="popcorn" id="popcorn" value="0" readonly class="snack-amount">
-                        <button type="button" class="quantity-btn" id="popcorn-plus">+</button>
-                    </div>
-                    <img src="images/popcorn.jpg" alt="Popcorn" class="snack-image">
-                </div>
-                <div class="menu-item">
-                    <label for="soda">Soda:</label>
-                    <div class="snack-quantity">
-                        <button type="button" class="quantity-btn" id="soda-minus">-</button>
-                        <input type="text" name="soda" id="soda" value="0" readonly class="snack-amount">
-                        <button type="button" class="quantity-btn" id="soda-plus">+</button>
-                    </div>
-                    <img src="images/soda.jpg" alt="Soda" class="snack-image">
-                </div>
-                <div class="menu-item">
-                    <label for="nachos">Nachos:</label>
-                    <div class="snack-quantity">
-                        <button type="button" class="quantity-btn" id="nachos-minus">-</button>
-                        <input type="text" name="nachos" id="nachos" value="0" readonly class="snack-amount">
-                        <button type="button" class="quantity-btn" id="nachos-plus">+</button>
-                    </div>
-                    <img src="images/nachos.jpg" alt="Nachos" class="snack-image">
-                </div>
+                <<div class="menu-item">
+    <label for="popcorn">Popcorn:</label>
+    <div class="snack-quantity">
+        <input type="number" name="popcorn" id="popcorn" value="0" min="0" class="snack-amount" required>
+    </div>
+    <img src="images/popcorn.jpg" alt="Popcorn" class="snack-image">
+</div>
+
+<div class="menu-item">
+    <label for="soda">Soda:</label>
+    <div class="snack-quantity">
+        <input type="number" name="soda" id="soda" value="0" min="0" class="snack-amount" required>
+    </div>
+    <img src="images/soda.jpg" alt="Soda" class="snack-image">
+</div>
+
+<div class="menu-item">
+    <label for="nachos">Nachos:</label>
+    <div class="snack-quantity">
+        <input type="number" name="nachos" id="nachos" value="0" min="0" class="snack-amount" required>
+    </div>
+    <img src="images/nachos.jpg" alt="Nachos" class="snack-image">
+</div>
+
 
                 <!-- Submit button -->
                 <button type="submit" class="btn">Proceed to Payment</button>
