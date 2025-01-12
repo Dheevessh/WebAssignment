@@ -64,8 +64,17 @@ main {
     color: #888; /* Subtle placeholder text */
 }
 
-.contact-form button {
-    width: 100%;
+/* Button Container Styling */
+.button-container {
+    display: flex; /* Use flexbox for alignment */
+    justify-content: space-between; /* Ensure buttons are spaced evenly */
+    gap: 10px; /* Add some space between buttons */
+}
+
+.contact-form button,
+.contact-form .back-button {
+    flex: 1; /* Ensure buttons have equal width */
+    text-align: center;
     background-color: #fbc02d; /* Gold button */
     color: #000; /* Black text for contrast */
     padding: 12px;
@@ -77,14 +86,17 @@ main {
     text-transform: uppercase;
     letter-spacing: 1px;
     transition: background-color 0.3s ease, transform 0.2s ease;
+    text-decoration: none; /* Remove underline for back button link */
 }
 
-.contact-form button:hover {
+.contact-form button:hover,
+.contact-form .back-button:hover {
     background-color: #ffca28; /* Lighter gold on hover */
     transform: scale(1.03); /* Slight zoom effect */
 }
 
-.contact-form button:active {
+.contact-form button:active,
+.contact-form .back-button:active {
     background-color: #f57f17; /* Darker gold on click */
     transform: scale(1); /* Reset zoom on click */
 }
@@ -106,6 +118,10 @@ footer p {
 @media (max-width: 600px) {
     .contact-form {
         padding: 15px 20px;
+    }
+
+    .button-container {
+        flex-direction: column; /* Stack buttons vertically on smaller screens */
     }
 
     header {

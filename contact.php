@@ -53,7 +53,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <label for="enquiry">Your Enquiry:</label>
             <textarea id="enquiry" name="enquiry" rows="5" required></textarea>
 
-            <button type="submit">Submit</button>
+            <div class="button-container">
+        <a href="movies.php" class="back-button">Back to Movies</a>
+        <button type="submit">Submit</button>
+    </div>
         </form>
     </main>
     <footer>

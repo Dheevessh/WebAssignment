@@ -1,11 +1,11 @@
-<?php
+<?php 
 session_start();
 
 // Retrieve the booking details
-$movie = $_POST['movie'] ?? '';
-$time = $_POST['time'] ?? '';
-$people = $_POST['people'] ?? '';
-$seats = $_POST['selected-seats'] ?? '';
+$movie = htmlspecialchars($_POST['movie'] ?? '', ENT_QUOTES, 'UTF-8');
+$time = htmlspecialchars($_POST['time'] ?? '', ENT_QUOTES, 'UTF-8');
+$people = htmlspecialchars($_POST['people'] ?? '', ENT_QUOTES, 'UTF-8');
+$seats = htmlspecialchars($_POST['selected-seats'] ?? '', ENT_QUOTES, 'UTF-8');
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -28,11 +28,13 @@ $seats = $_POST['selected-seats'] ?? '';
         <section class="menu-section">
             <h2>Snacks and Drinks</h2>
             <form id="menu-form" action="payment.php" method="POST">
+                <!-- Hidden inputs to pass booking details -->
                 <input type="hidden" name="movie" value="<?php echo $movie; ?>">
                 <input type="hidden" name="time" value="<?php echo $time; ?>">
                 <input type="hidden" name="people" value="<?php echo $people; ?>">
-                <input type="hidden" name="seats" value="<?php echo $seats; ?>">
+                <input type="hidden" name="selected-seats" value="<?php echo $seats; ?>">
 
+                <!-- Menu items for selecting snacks -->
                 <div class="menu-item">
                     <label for="popcorn">Popcorn:</label>
                     <input type="number" name="popcorn" id="popcorn" min="0" max="10" value="0">
@@ -46,7 +48,8 @@ $seats = $_POST['selected-seats'] ?? '';
                     <input type="number" name="nachos" id="nachos" min="0" max="10" value="0">
                 </div>
 
-                <button type="submit">Proceed to Payment</button>
+                <!-- Submit button -->
+                <button type="submit" class="btn">Proceed to Payment</button>
             </form>
         </section>
     </main>

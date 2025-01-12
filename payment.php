@@ -90,15 +90,6 @@ if (isset($_POST['payment_complete'])) {
                 <input type="hidden" name="people" value="<?php echo htmlspecialchars($_POST['people'] ?? 0); ?>">
                 <input type="hidden" name="selected-seats" value="<?php echo htmlspecialchars($_POST['selected-seats'] ?? ''); ?>">
 
-                <label for="popcorn">Popcorn:</label>
-                <input type="number" id="popcorn" name="popcorn" min="0" value="0"><br>
-
-                <label for="soda">Soda:</label>
-                <input type="number" id="soda" name="soda" min="0" value="0"><br>
-
-                <label for="nachos">Nachos:</label>
-                <input type="number" id="nachos" name="nachos" min="0" value="0"><br>
-
                 <h3>Select Payment Method:</h3>
                 <input type="radio" id="online_banking" name="payment_method" value="Online Banking" required>
                 <label for="online_banking">Online Banking</label><br>
