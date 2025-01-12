@@ -1,6 +1,7 @@
 <?php
 session_start();
 
+// Ensure only logged-in admin can access
 if (!isset($_SESSION['user']) || $_SESSION['user'] !== 'admin') {
     header("Location: login.php");
     exit;
@@ -8,23 +9,39 @@ if (!isset($_SESSION['user']) || $_SESSION['user'] !== 'admin') {
 
 include 'db.php';
 
-// Check if an ID is provided
+// Check if the booking ID is provided
 if (isset($_GET['id'])) {
-    $id = intval($_GET['id']); // Sanitize the ID
+    $bookingId = $_GET['id'];
 
-    // Delete the record from the database
-    $sql = "DELETE FROM bookings WHERE id = ?";
+    // Prepare the SQL DELETE query to remove the booking from the database
+    $sql = "DELETE FROM bookings WHERE booking_id = ?";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("i", $id);
 
-    if ($stmt->execute()) {
-        header("Location: admin.php?message=Booking deleted successfully.");
-        exit;
+    if ($stmt) {
+        // Bind the booking ID parameter
+        $stmt->bind_param("i", $bookingId);
+
+        // Execute the query
+        if ($stmt->execute()) {
+            // Successfully deleted the booking
+            echo "Booking deleted successfully.";
+            header("Location: admin.php"); // Redirect to the admin panel after successful deletion
+            exit;
+        } else {
+            // Error executing query
+            echo "Error: Unable to delete the booking.";
+        }
     } else {
-        echo "Error deleting booking: " . $conn->error;
+        echo "Error: Could not prepare the delete statement.";
     }
+
+    // Close the prepared statement and the database connection
+    $stmt->close();
 } else {
+    // If no ID is provided, redirect back to the admin panel
     header("Location: admin.php");
     exit;
 }
+
+$conn->close();
 ?>

@@ -1,0 +1,209 @@
+/* General Styles */
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #121212; /* Dark background for cinema vibe */
+    color: #f5f5f5; /* Light text for readability */
+}
+
+header {
+    background-color: #000; /* Black header */
+    color: #fbc02d; /* Gold text for branding */
+    padding: 15px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header .logo {
+    font-size: 24px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+header nav {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+header nav p {
+    margin: 0;
+}
+
+header .btn {
+    background-color: #fbc02d; /* Gold button */
+    color: #000;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+header .btn:hover {
+    background-color: #ffca28; /* Lighter gold on hover */
+    transform: scale(1.05);
+}
+
+/* Main Section */
+main {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 15px;
+}
+
+/* Movie Section */
+.movie-section {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.movie-section h2 {
+    font-size: 24px;
+    color: #fbc02d; /* Gold heading */
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #424242;
+    display: inline-block;
+    padding-bottom: 5px;
+}
+
+.movie-list {
+    display: flex;
+    overflow-x: auto; /* Horizontal scroll */
+    padding: 10px;
+    gap: 20px;
+    scroll-behavior: smooth;
+}
+
+.movie-list::-webkit-scrollbar {
+    height: 8px;
+}
+
+.movie-list::-webkit-scrollbar-thumb {
+    background: #fbc02d; /* Gold scrollbar */
+    border-radius: 10px;
+}
+
+.movie-item {
+    min-width: 150px;
+    max-width: 150px;
+    background-color: #1e1e1e; /* Dark grey card */
+    border-radius: 10px;
+    overflow: hidden;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+}
+
+.movie-item:hover {
+    transform: scale(1.1); /* Zoom effect */
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
+}
+
+.movie-poster {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.movie-item h3 {
+    font-size: 16px;
+    color: #fbc02d; /* Gold title */
+    margin: 10px 0;
+}
+
+/* Seat Selection Section */
+#seat-selection {
+    background-color: #1e1e1e; /* Dark grey container */
+    padding: 20px;
+    border-radius: 10px;
+    margin-top: 20px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
+}
+
+#seat-selection h2,
+#seat-selection h3 {
+    color: #fbc02d; /* Gold headings */
+}
+
+.time-bubbles {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+.time-slot {
+    cursor: pointer;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    color: #fff;
+    background-color: #424242;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.time-slot:hover,
+.time-slot.selected {
+    background-color: #4caf50; /* Green when selected */
+    color: white;
+}
+
+.screen {
+    margin: 20px auto;
+    background-color: #333;
+    text-align: center;
+    padding: 5px;
+    border-radius: 10px;
+    color: white;
+    font-weight: bold;
+    width: 70%;
+}
+
+.seat-map {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.seat {
+    width: 30px;
+    height: 30px;
+    border: 1px solid #ccc;
+    text-align: center;
+    line-height: 30px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.seat.available:hover {
+    background-color: #4caf50;
+    color: white;
+}
+
+.seat.selected {
+    background-color: #4caf50; /* Green when selected */
+    color: white;
+}
+
+.seat.unavailable {
+    background-color: #d9534f; /* Red for unavailable */
+    cursor: not-allowed;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 15px;
+    background-color: #000;
+    color: #fbc02d; /* Gold footer text */
+    font-size: 14px;
+}

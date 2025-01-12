@@ -27,36 +27,38 @@ if (isset($_POST['payment_complete'])) {
     $totalSeatCost = $people * 10;
     $totalPrice = $totalSnacksCost + $totalSeatCost;
 
-    // Insert booking details into the database
-    $sql = "INSERT INTO bookings (user_id, movie, showtime, people, seats, total_price, payment_method, popcorn_qty, soda_qty, nachos_qty, snacks_cost) 
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-    $stmt = $conn->prepare($sql);
+    // Insert booking details into the database (cinema_booking database)
+    $sql = "INSERT INTO bookings 
+    (user_id, movie, showtime, people, seats, total_price, payment_method, popcorn_qty, soda_qty, nachos_qty, snacks_cost) 
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-    if ($stmt) {
-        $stmt->bind_param(
-            "issisisiidi", 
-            $userId, 
-            $movie, 
-            $time, 
-            $people, 
-            $seats, 
-            $totalPrice, 
-            $paymentMethod, 
-            $popcorn, 
-            $soda, 
-            $nachos, 
-            $totalSnacksCost
-        );
+$stmt = $conn->prepare($sql);
 
-        if ($stmt->execute()) {
-            header("Location: confirmation.php?success=1");
-            exit;
-        } else {
-            echo "Error: Unable to process your payment. Please try again later.";
-        }
-    } else {
-        echo "Error: Could not prepare the statement.";
-    }
+if ($stmt) {
+$stmt->bind_param("issisisiidi", 
+    $userId, 
+    $movie, 
+    $time, 
+    $people, 
+    $seats, 
+    $totalPrice, 
+    $paymentMethod, 
+    $popcorn, 
+    $soda, 
+    $nachos, 
+    $totalSnacksCost
+);
+
+if ($stmt->execute()) {
+    header("Location: confirmation.php?success=1");
+    exit;
+} else {
+    echo "Error: Unable to process your payment. Please try again later.";
+}
+} else {
+echo "Error: Could not prepare the statement.";
+}
+
 
     // Close the statement and connection
     $stmt->close();
@@ -85,11 +87,19 @@ if (isset($_POST['payment_complete'])) {
         <section class="confirmation-section">
             <h2>Payment Details</h2>
             <form method="POST" action="payment.php">
+                <!-- Hidden inputs to pass booking details -->
                 <input type="hidden" name="movie" value="<?php echo htmlspecialchars($_POST['movie'] ?? ''); ?>">
                 <input type="hidden" name="time" value="<?php echo htmlspecialchars($_POST['time'] ?? ''); ?>">
                 <input type="hidden" name="people" value="<?php echo htmlspecialchars($_POST['people'] ?? 0); ?>">
                 <input type="hidden" name="selected-seats" value="<?php echo htmlspecialchars($_POST['selected-seats'] ?? ''); ?>">
 
+                <!-- Snack selections (pre-filled) -->
+                <h3>Selected Snacks:</h3>
+                <p>Popcorn: <?php echo htmlspecialchars($_POST['popcorn'] ?? 0); ?></p>
+                <p>Soda: <?php echo htmlspecialchars($_POST['soda'] ?? 0); ?></p>
+                <p>Nachos: <?php echo htmlspecialchars($_POST['nachos'] ?? 0); ?></p>
+
+                <!-- Payment Method selection -->
                 <h3>Select Payment Method:</h3>
                 <input type="radio" id="online_banking" name="payment_method" value="Online Banking" required>
                 <label for="online_banking">Online Banking</label><br>

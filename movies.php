@@ -39,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CinemaHub - Movies</title>
-    <link rel="stylesheet" href="styles1.css">
+    <link rel="stylesheet" href="styles2.css">
     <script src="script.js" defer></script>
     <style>
         .hidden { display: none; }
@@ -110,7 +110,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 "Avengers" => "avengers.jpg",
                 "Moana" => "moana.jpg",
                 "Coco" => "coco.jpg",
-                "Interstellar" => "interstellar.jpg"
+                "Interstellar" => "interstellar.jpg",
+                "The Lion King" => "lionking.jpg",
+                "Frozen" => "frozen.jpg",
+                "Jurassic Park" => "jurassicpark.jpg",
+                "The Dark Knight" => "darkknight.jpg",
+                "Toy Story" => "toystory.jpg",
+                "Harry Potter" => "harrypotter.jpg",
+                "Black Panther" => "blackpanther.jpg",
+                "Titanic" => "titanic.jpg",
+                "Avatar" => "avatar.jpg"
+    
             ];
             foreach ($movies as $movie => $poster) {
                 echo "
