@@ -2,8 +2,9 @@
 session_start();
 include 'db.php'; // Include the database connection
 
+// Check if the payment button was clicked
 if (isset($_POST['payment_complete'])) {
-    // Ensure user is logged in
+    // Ensure the user is logged in
     $userId = $_SESSION['user_id'] ?? null;
     if (!$userId) {
         header("Location: login.php");
@@ -21,7 +22,7 @@ if (isset($_POST['payment_complete'])) {
     $popcorn = $_POST['popcorn'] ?? 0;
     $soda = $_POST['soda'] ?? 0;
     $nachos = $_POST['nachos'] ?? 0;
-    $totalSnacksCost = $popcorn * 5 + $soda * 3 + $nachos * 4;
+    $totalSnacksCost = $popcorn * 5 + $soda * 3 + $nachos * 4; // Adjust the prices as needed
 
     // Calculate total cost (seats cost $10 per person)
     $totalSeatCost = $people * 10;
@@ -29,42 +30,47 @@ if (isset($_POST['payment_complete'])) {
 
     // Insert booking details into the database (cinema_booking database)
     $sql = "INSERT INTO bookings 
-    (user_id, movie, showtime, people, seats, total_price, payment_method, popcorn_qty, soda_qty, nachos_qty, snacks_cost) 
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            (user_id, movie, showtime, people, seats, total_price, payment_method, popcorn_qty, soda_qty, nachos_qty, snacks_cost) 
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-$stmt = $conn->prepare($sql);
+    $stmt = $conn->prepare($sql);
 
-if ($stmt) {
-$stmt->bind_param("issisisiidi", 
-    $userId, 
-    $movie, 
-    $time, 
-    $people, 
-    $seats, 
-    $totalPrice, 
-    $paymentMethod, 
-    $popcorn, 
-    $soda, 
-    $nachos, 
-    $totalSnacksCost
-);
+    if ($stmt) {
+        // Bind parameters for the prepared statement
+        $stmt->bind_param("issisisiidi", 
+            $userId, 
+            $movie, 
+            $time, 
+            $people, 
+            $seats, 
+            $totalPrice, 
+            $paymentMethod, 
+            $popcorn, 
+            $soda, 
+            $nachos, 
+            $totalSnacksCost
+        );
 
-if ($stmt->execute()) {
-    header("Location: confirmation.php?success=1");
-    exit;
-} else {
-    echo "Error: Unable to process your payment. Please try again later.";
-}
-} else {
-echo "Error: Could not prepare the statement.";
-}
+        // Execute the statement
+        if ($stmt->execute()) {
+            // Redirect to confirmation page on success
+            header("Location: confirmation.php?success=1");
+            exit;
+        } else {
+            // Error handling if the query fails
+            echo "Error: Unable to process your payment. Please try again later.";
+        }
+    } else {
+        // Error if the statement couldn't be prepared
+        echo "Error: Could not prepare the statement.";
+    }
 
-
-    // Close the statement and connection
+    // Close the prepared statement and database connection
     $stmt->close();
     $conn->close();
 }
 ?>
+
 
 <!-- HTML for the payment form -->
 <!DOCTYPE html>
@@ -73,7 +79,7 @@ echo "Error: Could not prepare the statement.";
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CinemaHub - Payment</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="payment.css">
 </head>
 <body>
     <header>
@@ -92,6 +98,7 @@ echo "Error: Could not prepare the statement.";
                 <input type="hidden" name="time" value="<?php echo htmlspecialchars($_POST['time'] ?? ''); ?>">
                 <input type="hidden" name="people" value="<?php echo htmlspecialchars($_POST['people'] ?? 0); ?>">
                 <input type="hidden" name="selected-seats" value="<?php echo htmlspecialchars($_POST['selected-seats'] ?? ''); ?>">
+                
 
                 <!-- Snack selections (pre-filled) -->
                 <h3>Selected Snacks:</h3>
@@ -108,7 +115,7 @@ echo "Error: Could not prepare the statement.";
 
                 <button type="submit" name="payment_complete" class="btn">Complete Payment</button>
             </form>
-            <button class="btn" onclick="window.location.href='movies.php';">Back to Movies</button>
+            <button class="btn" onclick="window.location.href='menu.php';">Back</button>
         </section>
     </main>
 

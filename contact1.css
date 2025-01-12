@@ -6,6 +6,12 @@ body {
     background-color: #121212; /* Dark cinema-like background */
     color: #e0e0e0; /* Light text for contrast */
     line-height: 1.6;
+
+    background-image: url('background1.jpg'); /* Add your background image here */
+    background-size: cover; /* Ensures the image covers the entire page */
+    background-position: center center; /* Centers the image */
+    background-attachment: fixed; /* Keeps the background fixed while scrolling */
+
 }
 
 /* Header Styling */

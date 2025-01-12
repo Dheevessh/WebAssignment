@@ -13,7 +13,7 @@ $seats = htmlspecialchars($_POST['selected-seats'] ?? '', ENT_QUOTES, 'UTF-8');
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CinemaHub - Snacks Menu</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="menu.css">
     <script src="script.js" defer></script>
 </head>
 <body>
@@ -37,15 +37,30 @@ $seats = htmlspecialchars($_POST['selected-seats'] ?? '', ENT_QUOTES, 'UTF-8');
                 <!-- Menu items for selecting snacks -->
                 <div class="menu-item">
                     <label for="popcorn">Popcorn:</label>
-                    <input type="number" name="popcorn" id="popcorn" min="0" max="10" value="0">
+                    <div class="snack-quantity">
+                        <button type="button" class="quantity-btn" id="popcorn-minus">-</button>
+                        <input type="int" name="popcorn" id="popcorn" value="0" readonly class="snack-amount">
+                        <button type="button" class="quantity-btn" id="popcorn-plus">+</button>
+                    </div>
+                    <img src="images/popcorn.jpg" alt="Popcorn" class="snack-image">
                 </div>
                 <div class="menu-item">
                     <label for="soda">Soda:</label>
-                    <input type="number" name="soda" id="soda" min="0" max="10" value="0">
+                    <div class="snack-quantity">
+                        <button type="button" class="quantity-btn" id="soda-minus">-</button>
+                        <input type="text" name="soda" id="soda" value="0" readonly class="snack-amount">
+                        <button type="button" class="quantity-btn" id="soda-plus">+</button>
+                    </div>
+                    <img src="images/soda.jpg" alt="Soda" class="snack-image">
                 </div>
                 <div class="menu-item">
                     <label for="nachos">Nachos:</label>
-                    <input type="number" name="nachos" id="nachos" min="0" max="10" value="0">
+                    <div class="snack-quantity">
+                        <button type="button" class="quantity-btn" id="nachos-minus">-</button>
+                        <input type="text" name="nachos" id="nachos" value="0" readonly class="snack-amount">
+                        <button type="button" class="quantity-btn" id="nachos-plus">+</button>
+                    </div>
+                    <img src="images/nachos.jpg" alt="Nachos" class="snack-image">
                 </div>
 
                 <!-- Submit button -->
@@ -57,5 +72,41 @@ $seats = htmlspecialchars($_POST['selected-seats'] ?? '', ENT_QUOTES, 'UTF-8');
     <footer>
         <p>&copy; 2025 CinemaHub. All rights reserved.</p>
     </footer>
+
+    <script>
+        // JavaScript to handle + and - button clicks for updating quantities
+        document.getElementById('popcorn-plus').addEventListener('click', function() {
+            var input = document.getElementById('popcorn');
+            var value = parseInt(input.value);
+            if (value < 10) input.value = value + 1;
+        });
+        document.getElementById('popcorn-minus').addEventListener('click', function() {
+            var input = document.getElementById('popcorn');
+            var value = parseInt(input.value);
+            if (value > 0) input.value = value - 1;
+        });
+
+        document.getElementById('soda-plus').addEventListener('click', function() {
+            var input = document.getElementById('soda');
+            var value = parseInt(input.value);
+            if (value < 10) input.value = value + 1;
+        });
+        document.getElementById('soda-minus').addEventListener('click', function() {
+            var input = document.getElementById('soda');
+            var value = parseInt(input.value);
+            if (value > 0) input.value = value - 1;
+        });
+
+        document.getElementById('nachos-plus').addEventListener('click', function() {
+            var input = document.getElementById('nachos');
+            var value = parseInt(input.value);
+            if (value < 10) input.value = value + 1;
+        });
+        document.getElementById('nachos-minus').addEventListener('click', function() {
+            var input = document.getElementById('nachos');
+            var value = parseInt(input.value);
+            if (value > 0) input.value = value - 1;
+        });
+    </script>
 </body>
 </html>

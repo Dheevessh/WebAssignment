@@ -1,0 +1,89 @@
+/* General Styles */
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #121212; /* Dark background for a cinematic feel */
+    color: #f5f5f5; /* Light text for readability */
+    background-image: url('background1.jpg'); /* Add your background image here */
+    background-size: cover; /* Ensures the image covers the entire page */
+    background-position: center center; /* Centers the image */
+    background-attachment: fixed; /* Keeps the background fixed while scrolling */
+
+}
+
+header {
+    background-color: #000; /* Black header for CinemaHub branding */
+    color: #fbc02d; /* Gold text for the header */
+    padding: 15px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+}
+
+header .logo {
+    font-size: 24px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+/* Main Section */
+main {
+    max-width: 1200px;
+    margin: 50px auto;
+    padding: 15px;
+    text-align: center;
+}
+
+/* Confirmation Section */
+.confirmation-section {
+    background-color: #1e1e1e; /* Dark grey background */
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
+}
+
+.confirmation-section h2 {
+    font-size: 28px;
+    color: #fbc02d; /* Gold for the header */
+    text-transform: uppercase;
+    margin-bottom: 20px;
+}
+
+.confirmation-section p {
+    font-size: 18px;
+    color: #fff;
+    margin-bottom: 30px;
+}
+
+/* Button Styles */
+button.btn {
+    background-color: #fbc02d; /* Gold background */
+    color: #000; /* Black text */
+    padding: 12px 25px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+    transition: background-color 0.3s ease;
+    width: 100%; /* Full width for the button */
+    margin-top: 20px;
+}
+
+button.btn:hover {
+    background-color: #ffca28; /* Lighter gold on hover */
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 15px;
+    background-color: #000; /* Black footer */
+    color: #fbc02d; /* Gold footer text */
+    font-size: 14px;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+}

@@ -1,0 +1,155 @@
+/* General Styles */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f7f7f7;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+/* Header */
+header {
+    background-color: #2a2a2a; /* Dark background */
+    color: #fff; /* White text */
+    padding: 20px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+header .logo {
+    font-size: 28px;
+    font-weight: bold;
+    color: #f8b91d; /* Yellow gold color */
+    text-transform: uppercase;
+}
+
+header .btn {
+    background-color: #f8b91d; /* Yellow gold */
+    color: #000000;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+header .btn:hover {
+    background-color: #d98b17; /* Slightly darker gold */
+    transform: scale(1.05);
+}
+
+/* Main Section */
+main {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Confirmation Section */
+.confirmation-section {
+    padding: 20px;
+    border-radius: 10px;
+    background-color: #fafafa;
+}
+
+.confirmation-section h2 {
+    font-size: 26px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #ddd;
+    padding-bottom: 10px;
+    text-align: center;
+}
+
+.confirmation-section h3 {
+    font-size: 20px;
+    margin: 20px 0;
+    color: #f8b91d; /* Gold for headings */
+}
+
+/* Payment Method */
+input[type="radio"] {
+    margin-right: 10px;
+}
+
+label {
+    font-size: 16px;
+    margin-right: 20px;
+    color: #333;
+}
+
+/* Buttons */
+button[type="submit"] {
+    background-color: #f8b91d; /* Gold */
+    color: #000000;
+    padding: 12px 25px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+    width: 100%;
+    margin-top: 20px;
+    transition: background-color 0.3s ease;
+}
+
+button[type="submit"]:hover {
+    background-color: #d98b17;
+}
+
+/* Snack List */
+.confirmation-section p {
+    font-size: 16px;
+    color: #666;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 15px;
+    background-color: #000;
+    color: #fbc02d; /* Gold footer text */
+    font-size: 14px;
+}
+
+
+
+
+
+/* Back to Movies Button */
+.btn {
+    background-color: #f8b91d; /* Green background */
+    color: rgb(0, 0, 0);              /* White text */
+    padding: 10px 20px;        /* Padding for better spacing */
+    border: none;              /* Remove border */
+    border-radius: 5px;        /* Rounded corners */
+    font-size: 16px;           /* Adjust font size */
+    cursor: pointer;          /* Change cursor to pointer when hovered */
+    transition: background-color 0.3s ease; /* Smooth transition for background color */
+}
+
+/* Button Hover Effect */
+.btn:hover {
+    background-color: #45a049; /* Darker green on hover */
+}
+
+/* Button Focus Effect */
+.btn:focus {
+    outline: none; /* Remove default focus outline */
+    box-shadow: 0 0 5px rgba(72, 239, 150, 0.7); /* Add a glow effect */
+}
+
+/* Button for 'Back' with alignment */
+.btn {
+    margin-top: 20px; /* Add some space from the elements above */
+    display: inline-block; /* Ensures the button behaves like an inline element */
+}
