@@ -62,6 +62,9 @@ $seats = htmlspecialchars($_POST['selected-seats'] ?? '', ENT_QUOTES, 'UTF-8');
                 <!-- Submit button -->
                 <button type="submit" class="btn">Proceed to Payment</button>
             </form>
+            
+            <!-- Back button -->
+            <button class="btn back-btn" onclick="window.location.href='movies.php';">Back to Movies</button>
         </section>
     </main>
 

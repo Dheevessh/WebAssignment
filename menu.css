@@ -116,14 +116,32 @@ header .btn:hover {
     transition: background-color 0.3s ease;
 }
 
+.btn {
+    margin-top: 20px; /* Adds space above the button */
+    display: block; /* Makes the button a block element */
+    width: fit-content; /* Adjusts width to fit content */
+    margin-left: 20px; /* Center horizontally */
+    margin-right: auto; /* Center horizontally */
+}
+
 .btn:hover {
     background-color: #e6b800;
 }
 
+/* Button Styling */
+
+.btn:hover {
+    background-color: #e6b800; /* Darker yellow on hover */
+}
+
+/* Specific Back Button Styling */
+
+
+/* Footer Styling */
 footer {
     text-align: center;
-    background-color: #000000;
-    color: #ffffff;
+    background-color: #000000; /* Black background */
+    color: #ffffff; /* White text */
     padding: 10px 0;
     margin-top: 40px;
     font-size: 0.9rem;
