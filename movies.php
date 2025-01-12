@@ -113,8 +113,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 "Interstellar" => "interstellar.jpg",
                 "The Lion King" => "lionking.jpg",
                 "Frozen" => "frozen.jpg",
-                "Jurassic Park" => "jurassicpark.jpg",
-                "The Dark Knight" => "darkknight.jpg",
                 "Toy Story" => "toystory.jpg",
                 "Harry Potter" => "harrypotter.jpg",
                 "Black Panther" => "blackpanther.jpg",
