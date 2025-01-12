@@ -1,0 +1,118 @@
+/* General Body Styling */
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #121212; /* Dark cinema-like background */
+    color: #e0e0e0; /* Light text for contrast */
+    line-height: 1.6;
+}
+
+/* Header Styling */
+header {
+    text-align: center;
+    padding: 20px 0;
+    background-color: #000; /* Sleek black header */
+    color: #fbc02d; /* Gold color for branding consistency */
+    font-size: 24px;
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+
+/* Main Content Area */
+main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 80vh; /* Center form vertically */
+    padding: 20px;
+}
+
+/* Contact Form Styling */
+.contact-form {
+    width: 100%;
+    max-width: 500px;
+    padding: 20px 30px;
+    background-color: #1e1e1e; /* Dark grey form background */
+    border-radius: 10px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5); /* Strong shadow for a premium feel */
+    border: 1px solid #424242;
+}
+
+.contact-form label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #fbc02d; /* Gold text for labels */
+    font-size: 14px;
+}
+
+.contact-form input,
+.contact-form textarea {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 20px;
+    border: 1px solid #555;
+    border-radius: 5px;
+    background-color: #222; /* Dark input background */
+    color: #e0e0e0; /* Light text for readability */
+    font-size: 14px;
+}
+
+.contact-form input::placeholder,
+.contact-form textarea::placeholder {
+    color: #888; /* Subtle placeholder text */
+}
+
+.contact-form button {
+    width: 100%;
+    background-color: #fbc02d; /* Gold button */
+    color: #000; /* Black text for contrast */
+    padding: 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.contact-form button:hover {
+    background-color: #ffca28; /* Lighter gold on hover */
+    transform: scale(1.03); /* Slight zoom effect */
+}
+
+.contact-form button:active {
+    background-color: #f57f17; /* Darker gold on click */
+    transform: scale(1); /* Reset zoom on click */
+}
+
+/* Footer Styling */
+footer {
+    text-align: center;
+    padding: 10px 0;
+    background-color: #000;
+    color: #fbc02d;
+    font-size: 14px;
+}
+
+footer p {
+    margin: 0;
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+    .contact-form {
+        padding: 15px 20px;
+    }
+
+    header {
+        font-size: 20px;
+    }
+
+    footer {
+        font-size: 12px;
+    }
+}
