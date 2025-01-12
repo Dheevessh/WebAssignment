@@ -44,25 +44,43 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <style>
         .hidden { display: none; }
         .selected { background-color: #4caf50; color: white; }
-        .seat { 
-            width: 30px; 
-            height: 30px; 
-            border: 1px solid #ccc; 
-            margin: 5px; 
-            text-align: center; 
-            cursor: pointer; 
+        .seat {
+            width: 30px;
+            height: 30px;
+            border: 1px solid #ccc;
+            margin: 5px;
+            text-align: center;
+            line-height: 30px;
+            cursor: pointer;
         }
         .seat.selected { background-color: #4caf50; color: white; }
         .seat.unavailable { background-color: #d9534f; cursor: not-allowed; }
-        .time-slot { 
-            cursor: pointer; 
-            padding: 10px; 
-            border: 1px solid #ccc; 
-            border-radius: 20px; 
-            margin: 5px; 
-            display: inline-block; 
+        .time-slot {
+            cursor: pointer;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 20px;
+            margin: 5px;
+            display: inline-block;
         }
         .time-slot.selected { background-color: #4caf50; color: white; }
+        .screen {
+            width: 80%;
+            height: 20px;
+            background-color: #333;
+            color: white;
+            text-align: center;
+            line-height: 20px;
+            margin: 20px auto;
+            border-radius: 10px;
+        }
+        .seat-map {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 10px;
+            justify-content: center;
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body>
@@ -108,7 +126,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     <section id="seat-selection" class="hidden">
         <h2>Select Your Show</h2>
-        <form id="booking-form" action="payment.php" method="POST">
+        <form id="booking-form" action="menu.php" method="POST">
             <input type="hidden" name="movie" id="selected-movie" value="">
             <input type="hidden" name="time" id="selected-time" value="">
             <input type="hidden" name="people" id="people" value="">
@@ -125,16 +143,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <label for="people-input">Number of People:</label>
             <input type="number" name="people" id="people-input" min="1" max="10" required>
 
+            <h3>Screen:</h3>
+            <div class="screen">Screen</div>
+
             <h3>Select Seats:</h3>
             <div class="seat-map">
                 <?php
                 for ($row = 1; $row <= 10; $row++) {
-                    echo '<div class="seat-row">';
                     for ($col = 1; $col <= 5; $col++) {
                         $seatId = chr(64 + $row) . $col; // Seat IDs like A1, B1, etc.
                         echo "<div class='seat available' id='$seatId' onclick='selectSeat(\"$seatId\")'>$seatId</div>";
                     }
-                    echo '</div>';
                 }
                 ?>
             </div>
@@ -152,7 +171,6 @@ function selectMovie(movie) {
 
 function selectTime(time) {
     document.getElementById('selected-time').value = time;
-    // Add color change logic
     document.querySelectorAll('.time-slot').forEach(slot => slot.classList.remove('selected'));
     event.target.classList.add('selected');
 }
