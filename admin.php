@@ -28,12 +28,12 @@ $inquiries_result = $conn->query($inquiries_sql);
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<link rel="stylesheet" href="admin1.css">
+<link rel="stylesheet" href="admin2.css">
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Panel - CinemaHub</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="admin2.css">
     <style>
         /* Add your styles here */
     </style>

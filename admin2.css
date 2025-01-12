@@ -3,18 +3,17 @@ body {
     font-family: 'Arial', sans-serif;
     margin: 0;
     padding: 0;
-
-    background-image: url('background1.jpg'); /* Add your background image here */
-    background-size: cover; /* Ensures the image covers the entire page */
-    background-position: center center; /* Centers the image */
-    background-attachment: fixed; /* Keeps the background fixed while scrolling */
-
+    background-image: url('background1.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    color: #fff;
 }
 
 /* Header Styling */
 header {
-    background-color: #000; /* Sleek black header */
-    color: #fbc02d; /* Gold color for branding consistency */
+    background-color: #000;
+    color: #fbc02d;
     text-align: center;
     padding: 20px;
     position: relative;
@@ -27,12 +26,13 @@ header h1 {
     text-transform: uppercase;
 }
 
+/* Logout Button Styling */
 .btn-logout {
     position: absolute;
     top: 50%;
     right: 20px;
     transform: translateY(-50%);
-    background-color: #fbc02d; /* Gold button */
+    background-color: #fbc02d;
     color: #000;
     border: none;
     padding: 10px 20px;
@@ -45,16 +45,16 @@ header h1 {
 }
 
 .btn-logout:hover {
-    background-color: #ffca28; /* Lighter gold */
-    transform: scale(1.05); /* Slight zoom effect */
+    background-color: #ffca28;
+    transform: scale(1.05);
 }
 
-/* Main Section */
+/* Main Section Styling */
 main {
     max-width: 1200px;
     margin: 30px auto;
     padding: 20px;
-    background-color: #1e1e1e; /* Dark grey container background */
+    background-color: #1e1e1e;
     border-radius: 10px;
     box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
 }
@@ -63,7 +63,7 @@ main {
 main h2 {
     margin-top: 0;
     margin-bottom: 20px;
-    color: #fbc02d; /* Gold headings */
+    color: #fbc02d;
     border-bottom: 2px solid #424242;
     padding-bottom: 5px;
     text-transform: uppercase;
@@ -77,28 +77,27 @@ table {
     margin-bottom: 30px;
 }
 
-table th,
-table td {
+table th, table td {
     padding: 12px 15px;
     text-align: center;
 }
 
 table th {
-    background-color: #2c2c2c; /* Dark table header */
-    color: #fbc02d; /* Gold text */
+    background-color: #2c2c2c;
+    color: #fbc02d;
     font-weight: bold;
     text-transform: uppercase;
     border-bottom: 2px solid #424242;
 }
 
 table td {
-    background-color: #1e1e1e; /* Dark grey table rows */
-    color: #e0e0e0; /* Light text */
+    background-color: #1e1e1e;
+    color: #e0e0e0;
     border-bottom: 1px solid #333;
 }
 
 table tr:hover td {
-    background-color: #2c2c2c; /* Highlight row on hover */
+    background-color: #2c2c2c;
     color: #fbc02d;
 }
 
@@ -111,13 +110,13 @@ table a {
 }
 
 table a:hover {
-    color: #ffca28; /* Lighter gold on hover */
-    transform: scale(1.05); /* Slight zoom effect */
+    color: #ffca28;
+    transform: scale(1.05);
 }
 
 table a:active {
-    color: #f57f17; /* Darker gold on click */
-    transform: scale(1); /* Reset zoom on click */
+    color: #f57f17;
+    transform: scale(1);
 }
 
 /* Responsive Design */
@@ -126,8 +125,7 @@ table a:active {
         padding: 15px;
     }
 
-    table th,
-    table td {
+    table th, table td {
         padding: 8px 10px;
         font-size: 12px;
     }
