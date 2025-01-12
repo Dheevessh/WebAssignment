@@ -40,7 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CinemaHub - Movies</title>
     <link rel="stylesheet" href="styles2.css">
-    <script src="script.js" defer></script>
+    <script src="script1.js" defer></script>
     <style>
         .hidden { display: none; }
         .selected { background-color: #4caf50; color: white; }
@@ -152,6 +152,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             <label for="people-input">Number of People:</label>
             <input type="number" name="people" id="people-input" min="1" max="10" required>
+            
+            <p>Total Price: <span id="total-price">0</span> Ringgit</p>
+
 
             <h3>Screen:</h3>
             <div class="screen">Screen</div>
